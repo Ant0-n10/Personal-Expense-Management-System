@@ -1,2 +1,11 @@
-package Ant0_n10.financas.controller;public class transactionController {
+package Ant0_n10.financas.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/transactions")
+@RequiredArgsConstructor
+public class TransactionController {
 }

@@ -1,2 +1,6 @@
-package Ant0_n10.financas.enumerations;public enum TypeTransaction {
+package Ant0_n10.financas.enumerations;
+
+public enum TypeTransaction {
+    INCOME,
+    EXPENSE
 }

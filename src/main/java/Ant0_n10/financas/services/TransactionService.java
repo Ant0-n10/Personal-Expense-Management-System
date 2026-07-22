@@ -17,9 +17,9 @@ import java.time.LocalDate;
 @Service
 @RequiredArgsConstructor
 public class TransactionService {
-    TransactionRepository transactionRepository;
-    TransactionMapper transactionMapper;
-    CategoryRepository categoryRepository;
+    private final TransactionRepository transactionRepository;
+    private final TransactionMapper transactionMapper;
+    private final CategoryRepository categoryRepository;
 
     public TransactionDTO.Response createTransaction(TransactionDTO.Request transactionDTO){
         //negative values treatment

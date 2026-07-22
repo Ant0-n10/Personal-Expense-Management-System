@@ -22,12 +22,15 @@ public class Transaction {
     private Long id;
 
     private String description;
+    @Column(name = "transaction_value")
     private BigDecimal value;
+    @Column(name = "transaction_date")
     private LocalDate date;
 
     @Enumerated(EnumType.STRING)
     private TypeTransaction typeTransaction;
 
     @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
 }

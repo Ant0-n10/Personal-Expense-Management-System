@@ -1,6 +1,5 @@
 package Ant0_n10.financas.services;
 
-import Ant0_n10.financas.Mappers.CategoryMapper;
 import Ant0_n10.financas.Mappers.TransactionMapper;
 import Ant0_n10.financas.dtos.TransactionDTO;
 import Ant0_n10.financas.enumerations.TypeTransaction;
@@ -40,5 +39,17 @@ public class TransactionService {
 
         Transaction savedTransaction = transactionRepository.save(transaction);
         return transactionMapper.toResponseDTO(savedTransaction);
+    }
+
+    public TransactionDTO.BalanceResponseDTO getBalance(){
+        BigDecimal totalIncome = transactionRepository.sumTypeTransaction(TypeTransaction.INCOME);
+        BigDecimal totalExpense = transactionRepository.sumTypeTransaction(TypeTransaction.EXPENSE);
+
+        totalIncome = (totalIncome != null) ? totalIncome : BigDecimal.ZERO;
+        totalExpense = (totalExpense != null) ? totalExpense : BigDecimal.ZERO;
+
+        BigDecimal currentBalance = totalIncome.subtract(totalExpense);
+
+        return new TransactionDTO.BalanceResponseDTO(totalIncome, totalExpense, currentBalance);
     }
 }

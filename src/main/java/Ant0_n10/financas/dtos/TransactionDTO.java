@@ -36,4 +36,10 @@ public final class TransactionDTO {
             TypeTransaction typeTransaction,
             Long categoryId
     ){}
+
+    public record BalanceResponseDTO(
+            BigDecimal totalIncome,
+            BigDecimal totalExpense,
+            BigDecimal currentBalance
+    ){}
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -52,4 +53,10 @@ public class TransactionService {
 
         return new TransactionDTO.BalanceResponseDTO(totalIncome, totalExpense, currentBalance);
     }
+
+    public List<TransactionDTO.Response> getAllTransaction(){
+        return transactionRepository.findAll().stream().map(transactionMapper::toResponseDTO).toList();
+    }
+
+
 }

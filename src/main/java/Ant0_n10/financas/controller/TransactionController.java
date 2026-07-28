@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/transactions")
 @RequiredArgsConstructor
@@ -19,8 +21,13 @@ public class TransactionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.createTransaction(request));
     }
 
-    @GetMapping
+    @GetMapping("/balance")
     public ResponseEntity<TransactionDTO.BalanceResponseDTO> getBalance(){
         return ResponseEntity.status(HttpStatus.OK).body(transactionService.getBalance());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TransactionDTO.Response>> getAllTransaction(){
+        return ResponseEntity.status(HttpStatus.OK).body(transactionService.getAllTransaction());
     }
 }

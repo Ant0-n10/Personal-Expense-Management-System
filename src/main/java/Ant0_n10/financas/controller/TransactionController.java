@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,11 @@ public class TransactionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TransactionDTO.Response>> getAllTransaction(){
-        return ResponseEntity.status(HttpStatus.OK).body(transactionService.getAllTransaction());
+    public ResponseEntity<List<TransactionDTO.Response>> getAllFiltered(
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate){
+        var response = transactionService.getAllFiltered(categoryId,startDate,endDate);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

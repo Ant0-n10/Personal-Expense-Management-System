@@ -54,9 +54,22 @@ public class TransactionService {
         return new TransactionDTO.BalanceResponseDTO(totalIncome, totalExpense, currentBalance);
     }
 
-    public List<TransactionDTO.Response> getAllTransaction(){
-        return transactionRepository.findAll().stream().map(transactionMapper::toResponseDTO).toList();
+
+    public List<TransactionDTO.Response> getAllFiltered(Long categoryId, LocalDate startDate, LocalDate endDate){
+        List<Transaction> transactions;
+
+        if (categoryId != null && startDate != null && endDate != null){
+            transactions = transactionRepository.findByCategoryIdAndDateBetween(categoryId, startDate, endDate);
+        }
+        else if (categoryId != null) {transactions = transactionRepository.findByCategoryId(categoryId);
+        }
+        else if (startDate != null && endDate != null) {
+            transactions = transactionRepository.findByDateBetween(startDate,endDate);
+        }
+        else {
+            transactions = transactionRepository.findAll();
+        }
+
+        return transactions.stream().map(transactionMapper::toResponseDTO).toList();
     }
-
-
 }

@@ -72,4 +72,31 @@ public class TransactionService {
 
         return transactions.stream().map(transactionMapper::toResponseDTO).toList();
     }
+
+    public TransactionDTO.Response updateTransaction(Long id, TransactionDTO.Update update){
+       Transaction transaction = transactionRepository.findById(id)
+               .orElseThrow(() -> new RuntimeException("Id not found " + id));
+
+       if(update.categoryId() != null){
+           Category category = categoryRepository.findById(update.categoryId())
+                   .orElseThrow(() -> new RuntimeException("Id not found: " + update.categoryId()));
+           transaction.setCategory(category);
+       }
+       transactionMapper.toUpdate(update, transaction);
+
+        if (update.value() != null) {
+            transaction.setValue(update.value().abs());
+        }
+
+       return transactionMapper.toResponseDTO(transactionRepository.save(transaction));
+    }
+
+    public void deleteTransaction(Long id){
+        if (!transactionRepository.existsById(id)){
+            throw new RuntimeException("Id not Found: " + id);
+        }
+
+        transactionRepository.deleteById(id);
+    }
+
 }

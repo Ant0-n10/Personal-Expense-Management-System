@@ -35,4 +35,18 @@ public class TransactionController {
         var response = transactionService.getAllFiltered(categoryId,startDate,endDate);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PatchMapping
+    public ResponseEntity<TransactionDTO.Response> updateTransaction(
+            @Valid @PathVariable Long id, @Valid @RequestBody TransactionDTO.Update update){
+        return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.updateTransaction(id, update));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteTransaction(Long id){
+        transactionService.deleteTransaction(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
 }
